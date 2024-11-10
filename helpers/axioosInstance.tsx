@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const DEV_URL = "http://localhost:3100/api";
-const PROD_URL = "https://backend-langkahtemankamu.vercel.app/api";
+const PROD_URL = "https://backend-kelompok-5-blog-app.vercel.app/api";
 
 const axiosInstance = axios.create({
   baseURL: PROD_URL,
