@@ -1,3 +1,8 @@
+"use client";
+
+import BlogDataTable from "@/components/dashboard/blogs/BlogDataTable";
+import CategoryDataTable from "@/components/dashboard/categories/CategoryDataTable";
+import Stats from "@/components/dashboard/main/Stats";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,9 +13,15 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
 
 const DashboardPage = () => {
+  const { data: myProfile, isSuccess } = useFetchData({
+    queryKey: ["myProfile"],
+    dataProtected: `users/me`,
+  });
+
   return (
     <div>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -26,7 +37,20 @@ const DashboardPage = () => {
           </Breadcrumb>
         </div>
       </header>
-      <div className="p-4">CONTENT GOES HERE</div>
+      <div className="p-4">
+        <Stats />
+        {myProfile && myProfile.data.role === "ADMINISTRATOR" && (
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+            <CategoryDataTable />
+            <BlogDataTable />
+          </div>
+        )}
+        {myProfile && myProfile.data.role === "BLOGGER" && (
+          <div className="mt-10 grid grid-cols-1 gap-5 md:gap-10">
+            <BlogDataTable />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
