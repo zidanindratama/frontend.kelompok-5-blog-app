@@ -1,6 +1,8 @@
+import { TeamSwitcher } from "@/components/dashboard/team-switcher";
 import Creative from "@/components/main/about-us/Creative";
 import Hero from "@/components/main/about-us/Hero";
 import Started from "@/components/main/about-us/Started";
+import Tech from "@/components/main/about-us/Tech";
 import Authors from "@/components/main/Authors";
 import CTA from "@/components/main/CTA";
 import Footer from "@/components/main/Footer";
@@ -17,6 +19,7 @@ const AboutUsPage = () => {
       <Creative />
       <Started />
       <Authors />
+      <Tech />
       <CTA />
       <Footer />
     </div>
