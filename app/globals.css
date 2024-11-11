@@ -103,4 +103,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  .prose * {
+    all: revert;
+  }
+
+  .heading-node {
+    @apply p-3 bg-yellowBlog/20 w-fit;
+  }
 }

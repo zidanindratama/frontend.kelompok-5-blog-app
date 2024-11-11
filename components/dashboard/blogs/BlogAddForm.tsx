@@ -28,11 +28,13 @@ import { z } from "zod";
 import React, { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useFetchData } from "@/hooks/useFetchData";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z.string(),
   coverImage: z.any(),
   content: z.string(),
+  shortDescription: z.string(),
 });
 
 const BlogAddForm = () => {
@@ -79,6 +81,7 @@ const BlogAddForm = () => {
 
       appendIfNotNull("title", values.title);
       appendIfNotNull("content", values.content);
+      appendIfNotNull("shortDescription", values.shortDescription);
       appendIfNotNull("authorId", myProfile?.data.id);
 
       if (values.coverImage[0] !== undefined) {
@@ -124,6 +127,23 @@ const BlogAddForm = () => {
                         type="file"
                         placeholder="Cover Image"
                         {...coverImageRef}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="shortDescription"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Short Deescription</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Tell us a little bit about this blog"
+                        className="resize-none"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />

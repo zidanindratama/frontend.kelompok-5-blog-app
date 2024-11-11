@@ -25,11 +25,14 @@ import { z } from "zod";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useFetchData } from "@/hooks/useFetchData";
 import { useUpdateData } from "@/hooks/useUpdateData";
+import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z.string(),
   coverImage: z.any(),
   content: z.string(),
+  shortDescription: z.string(),
 });
 
 type Props = {
@@ -47,6 +50,7 @@ const BlogUpdateForm = ({ slug }: Props) => {
     defaultValues: {
       title: "",
       content: "",
+      shortDescription: "",
       coverImage: null,
     },
   });
@@ -59,6 +63,7 @@ const BlogUpdateForm = ({ slug }: Props) => {
       reset({
         title: blogData.data.title || "",
         content: blogData.data.content || "",
+        shortDescription: blogData.data.shortDescription || "",
         coverImage: blogData.data.image || null,
       });
       if (editorRef.current) {
@@ -72,7 +77,7 @@ const BlogUpdateForm = ({ slug }: Props) => {
   const mutationUpdateBlog = useUpdateData({
     queryKey: "blogData",
     dataProtected: `blogs/${slug}`,
-    backUrl: `/dashboard/blogs/${slug}`,
+    backUrl: `/dashboard/blogs`,
     multipart: true,
   });
 
@@ -100,6 +105,7 @@ const BlogUpdateForm = ({ slug }: Props) => {
 
     appendIfNotNull("title", values.title);
     appendIfNotNull("content", values.content);
+    appendIfNotNull("shortDescription", values.shortDescription);
 
     if (isFileList) {
       form.append("image", values.coverImage[0]);
@@ -143,6 +149,23 @@ const BlogUpdateForm = ({ slug }: Props) => {
                         type="file"
                         placeholder="Cover Image"
                         {...coverImageRef}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="shortDescription"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Short Deescription</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Tell us a little bit about this blog"
+                        className="resize-none"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
